@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 15:16:50 by merlich           #+#    #+#             */
-/*   Updated: 2021/12/02 18:06:47 by merlich          ###   ########.fr       */
+/*   Updated: 2021/12/02 18:54:07 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 static size_t	ft_search(char *s, char c)
 {
@@ -70,7 +70,7 @@ static char	*ft_build_line(char *s, char *tmp, char *buff)
 
 char	*get_next_line(int fd)
 {
-	static char	s[BUFFER_SIZE + 1] = "\0";
+	static char	s[OPEN_MAX][BUFFER_SIZE + 1];
 	int			res;
 	char		*line;
 	char		*tmp;
@@ -78,10 +78,12 @@ char	*get_next_line(int fd)
 
 	res = 1;
 	line = NULL;
-	if ((ft_search(s, '\n') != ft_strlen(s)))
+	if (fd < 0)
+		return (NULL);
+	if ((ft_search(s[fd], '\n') != ft_strlen(s[fd])))
 	{
-		line = ft_substr(s, 0, ft_search(s, '\n') + 1);
-		ft_strdup(ft_strchr(s, '\n'), s);
+		line = ft_substr(s[fd], 0, ft_search(s[fd], '\n') + 1);
+		ft_strdup(ft_strchr(s[fd], '\n'), s[fd]);
 		return (line);
 	}
 	tmp = malloc(sizeof(char) * (BUFFER_SIZE + 1));
@@ -94,7 +96,7 @@ char	*get_next_line(int fd)
 	buff[0] = '\0';
 //	res = ft_get_tmp(fd, res, &buff, &tmp);
 	res = read(fd, buff, BUFFER_SIZE);
-	if (res == -1 || (res == 0 && s[0] == '\0'))
+	if (res == -1 || (res == 0 && s[fd][0] == '\0'))
 	{
 		free(tmp);
 		free(buff);
@@ -118,7 +120,7 @@ char	*get_next_line(int fd)
 	}
 	tmp = ft_get_new_tmp(tmp, buff);
 	// printf("_____%s\n", tmp);
-	line = ft_build_line(s, tmp, buff);
+	line = ft_build_line(s[fd], tmp, buff);
 	// printf("_____%s\n", line);
 	return (line);
 }
