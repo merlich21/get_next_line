@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 18:04:31 by merlich           #+#    #+#             */
-/*   Updated: 2021/12/02 18:17:00 by merlich          ###   ########.fr       */
+/*   Updated: 2021/12/02 20:42:39 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ int	main(void)
 //	printf("%s", get_next_line(0));
 	printf("%s", get_next_line(fd));
 	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
+	// printf("%s", get_next_line(fd));
+	// printf("%s", get_next_line(fd));
+	// printf("%s", get_next_line(fd));
 	//printf("%s", get_next_line(fd));
 	// printf("%s", get_next_line(fd));
 	//printf("%s\n", NULL);

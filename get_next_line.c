@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 15:16:50 by merlich           #+#    #+#             */
-/*   Updated: 2021/12/02 18:06:47 by merlich          ###   ########.fr       */
+/*   Updated: 2021/12/02 22:29:50 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,19 +36,6 @@ static char	*ft_get_new_tmp(char *tmp, char *buff)
 	return (tmp);
 }
 
-// static int	ft_get_tmp(int fd, int res, char **buff, char **tmp)
-// {
-// 	res = read(fd, *buff, BUFFER_SIZE);
-// 	*buff[res] = '\0';
-// 	while ((ft_search(*buff, '\n') == -1) && (res > 0))
-// 	{
-// 		*tmp = ft_get_new_tmp(*tmp, *buff);
-// 		res = read(fd, *buff, BUFFER_SIZE);
-// 		*buff[res] = '\0';
-// 	}
-// 	return (res);
-// }
-
 static char	*ft_build_line(char *s, char *tmp, char *buff)
 {
 	int		index;
@@ -68,15 +55,41 @@ static char	*ft_build_line(char *s, char *tmp, char *buff)
 	return (line);
 }
 
+static char	*ft_get_line(int fd, char *s, char *buff, char *tmp)
+{
+	int		res;
+
+	res = read(fd, buff, BUFFER_SIZE);
+	if (res == -1 || (res == 0 && s[0] == '\0'))
+	{
+		free(tmp);
+		free(buff);
+		return (NULL);
+	}
+	buff[res] = '\0';
+	while ((ft_search(buff, '\n') == ft_strlen(buff)) && (res > 0))
+	{
+		tmp = ft_get_new_tmp(tmp, buff);
+		res = read(fd, buff, BUFFER_SIZE);
+		if (res == -1)
+		{
+			free(tmp);
+			free(buff);
+			return (NULL);
+		}
+		buff[res] = '\0';
+	}
+	tmp = ft_get_new_tmp(tmp, buff);
+	return (ft_build_line(s, tmp, buff));
+}
+
 char	*get_next_line(int fd)
 {
 	static char	s[BUFFER_SIZE + 1] = "\0";
-	int			res;
 	char		*line;
 	char		*tmp;
 	char		*buff;
 
-	res = 1;
 	line = NULL;
 	if ((ft_search(s, '\n') != ft_strlen(s)))
 	{
@@ -92,33 +105,6 @@ char	*get_next_line(int fd)
 	if (NULL == buff)
 		return (NULL);
 	buff[0] = '\0';
-//	res = ft_get_tmp(fd, res, &buff, &tmp);
-	res = read(fd, buff, BUFFER_SIZE);
-	if (res == -1 || (res == 0 && s[0] == '\0'))
-	{
-		free(tmp);
-		free(buff);
-		return (NULL);
-	}
-	buff[res] = '\0';
-//	printf("%d\n", res);
-	while ((ft_search(buff, '\n') == ft_strlen(buff)) && (res > 0))
-	{
-		tmp = ft_get_new_tmp(tmp, buff);
-		res = read(fd, buff, BUFFER_SIZE);
-	//	printf("%s\n", tmp);
-	//	printf("%d\n", res);
-		if (res == -1)
-		{
-			free(tmp);
-			free(buff);
-			return (NULL);
-		}
-		buff[res] = '\0';
-	}
-	tmp = ft_get_new_tmp(tmp, buff);
-	// printf("_____%s\n", tmp);
-	line = ft_build_line(s, tmp, buff);
-	// printf("_____%s\n", line);
+	line = ft_get_line(fd, s, buff, tmp);
 	return (line);
 }
