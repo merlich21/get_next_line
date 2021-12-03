@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 15:16:50 by merlich           #+#    #+#             */
-/*   Updated: 2021/12/02 22:29:50 by merlich          ###   ########.fr       */
+/*   Updated: 2021/12/03 22:57:23 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,10 @@ static char	*ft_build_line(char *s, char *tmp, char *buff)
 	char	*line;
 
 	index = ft_search(tmp, '\n');
-	if (index == -1)
-		str = ft_substr(tmp, 0, ft_strlen(tmp));
-	else
-		str = ft_substr(tmp, 0, index + 1);
+	// if (index == -1)
+	// 	str = ft_substr(tmp, 0, ft_strlen(tmp));
+	// else
+	str = ft_substr(tmp, 0, index + 1);
 	line = ft_strjoin(s, str);
 	free(str);
 	ft_strdup(ft_strchr(buff, '\n'), s);
@@ -107,4 +107,27 @@ char	*get_next_line(int fd)
 	buff[0] = '\0';
 	line = ft_get_line(fd, s, buff, tmp);
 	return (line);
+}
+
+#include <stddef.h>
+#include <fcntl.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <sys/uio.h>
+#include <unistd.h>
+#include <stdio.h>
+
+int main(void)
+{
+	int	i = 0;
+	char *s;
+	int	fd = open("text", O_RDONLY);
+	while (i < 1000)
+	{
+		s = get_next_line(fd);
+		printf("%s", s);
+		i++;
+	}
+	close(fd);
+	return (0);
 }

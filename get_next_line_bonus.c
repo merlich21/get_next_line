@@ -6,7 +6,7 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 15:16:50 by merlich           #+#    #+#             */
-/*   Updated: 2021/12/02 22:29:47 by merlich          ###   ########.fr       */
+/*   Updated: 2021/12/03 22:50:55 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,10 @@ static char	*ft_build_line(char *s, char *tmp, char *buff)
 	char	*line;
 
 	index = ft_search(tmp, '\n');
-	if (index == -1)
-		str = ft_substr(tmp, 0, ft_strlen(tmp));
-	else
-		str = ft_substr(tmp, 0, index + 1);
+	// if (index == ft_strlen(tmp))
+	// 	str = ft_substr(tmp, 0, ft_strlen(tmp));
+	// else
+	str = ft_substr(tmp, 0, index + 1);
 	line = ft_strjoin(s, str);
 	free(str);
 	ft_strdup(ft_strchr(buff, '\n'), s);
