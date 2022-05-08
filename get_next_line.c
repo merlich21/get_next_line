@@ -108,26 +108,3 @@ char	*get_next_line(int fd)
 	line = ft_get_line(fd, s, buff, tmp);
 	return (line);
 }
-
-#include <stddef.h>
-#include <fcntl.h>
-#include <stdlib.h>
-#include <sys/types.h>
-#include <sys/uio.h>
-#include <unistd.h>
-#include <stdio.h>
-
-int main(void)
-{
-	int	i = 0;
-	char *s;
-	int	fd = open("text", O_RDONLY);
-	while (i < 1000)
-	{
-		s = get_next_line(fd);
-		printf("%s", s);
-		i++;
-	}
-	close(fd);
-	return (0);
-}
