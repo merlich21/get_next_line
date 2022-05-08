@@ -6,11 +6,12 @@
 /*   By: merlich <merlich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 18:04:31 by merlich           #+#    #+#             */
-/*   Updated: 2021/12/02 20:42:39 by merlich          ###   ########.fr       */
+/*   Updated: 2022/05/08 20:41:42 by merlich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
+#include <fcntl.h>
 #include "get_next_line.h"
 
 int main(void)
