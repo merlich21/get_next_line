@@ -21,13 +21,15 @@ int main(void)
 	
 	i = 0;
 	fd = open("example.txt", O_RDONLY);
-	if (fd != -1)
+	if (fd == -1)
+		return (-1);
+	else
 	{
-		while (i < 1000)
+		s = get_next_line(fd);
+		while (s)
 		{
-			s = get_next_line(fd);
 			printf("%s", s);
-			i++;
+			s = get_next_line(fd);
 		}
 		close(fd);
 	}
