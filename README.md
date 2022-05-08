@@ -10,12 +10,13 @@ Summary:
 This project is about programming a function that returns a line
 read from a file descriptor.
 
-HOW TO RUN:
+**HOW TO RUN:**
 
-bash run.sh
-
+**bash run.sh
+**
 or
 
-cc -Wall -Wextra -Werror main.c get_next_line.c get_next_line_utils.c && ./a.out
+**cc -Wall -Wextra -Werror main.c get_next_line.c get_next_line_utils.c && ./a.out
+**
 
 The program will read the file "example.txt"
